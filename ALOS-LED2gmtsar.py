@@ -33,8 +33,6 @@
 import sys
 
 infile = sys.argv[1]
-file_root = infile.split("-")[1]
-
 ### OPEN THE LED FILE FOR READING ###
 f = open(infile,'rb')
 #led_descriptor = f.read(720)
@@ -55,7 +53,9 @@ interval = float(f.read(22))
 junk = f.read(182)
 
 ### WRITE THE NEW LED FILE ###
-with open(file_root+'.LED','w') as LED:
+outfile = '%d%02d%02d.LED' % (year,month,day)
+print "Writing: %s" % outfile
+with open(outfile,'w') as LED:
     LED.write('%d %d %d %f %f\n' % (num_points,year,jday,sod,interval))
     for i in range(28):
         tmp = f.read(132)
