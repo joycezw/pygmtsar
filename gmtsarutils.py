@@ -7,6 +7,18 @@ def run_command(cmd):
     return stdout
 
 ####################################################
+def calc_dop_orb(prm_file):
+    ##### COMPUTE DOPPLER AND UPDATE PRM FILE #####
+    log_file = os.path.splitext(prm_file)[0] + '.log'
+    output = gmtsarutils.run_command('calc_dop_orb ' + prm_file + ' ' + log_file + ' 0 0')
+    log_out = open(log_file).readlines()
+    PRM = open(prm_file, 'a')
+    for line in log_out:
+        PRM.write(line)
+    PRM.close()
+    os.remove(log_file)
+
+####################################################
 def read_prm(prm_file):
   prm_dict = {}
   for line in open(prm_file):

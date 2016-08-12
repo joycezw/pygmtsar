@@ -53,6 +53,8 @@ scID = prmDict['SC_identity']
 prmList = sorted(glob.glob('*PRM'))
 for scene in prmList:
     temp_dict = gmtsarutils.read_prm(scene)
+    if not 'SC_vel' in temp_dict.keys():
+       gmtsarutils.calc_dop_orb(scene)
     date = os.path.splitext(scene)[0]
     cmd = 'SAT_baseline ' + masterPRM + ' ' + scene
     pipe = sub.Popen(cmd, shell=True, stdout=sub.PIPE).stdout
